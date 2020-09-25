@@ -44,13 +44,13 @@ class PixelizatorMod(loader.Module):
 	@loader.sudo
 	async def pixcmd(self, message):
 		""".pix <reply to photo>"""
-		pix = 3
+		soap = 3
 		a = utils.get_args(message)
 		if a:
 			if a[0].isdigit():
-				pix = int(a[0])
-				if pix <= 0:
-					pix = 3
+				soap = int(a[0])
+				if soap <= 0:
+					soap = 3
 		
 		if message.is_reply:
 			reply_message = await message.get_reply_message()
@@ -64,7 +64,7 @@ class PixelizatorMod(loader.Module):
 		
 		await message.edit("Pixelizing...")
 		file = await self.client.download_media(data, bytes)
-		media = await Soaping(file, pix)
+		media = await Soaping(file, soap)
 		await message.delete()
 		
 		await message.client.send_file(message.to_id, media)
