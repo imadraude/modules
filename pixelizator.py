@@ -27,14 +27,14 @@ import random
 logger = logging.getLogger(__name__)
 
 def register(cb):
-	cb(SoaperMod())
+	cb(PixelizatorMod())
 
 
 @loader.tds
-class SoaperMod(loader.Module):
-	"""Гавно залупное"""
+class PixelizatorMod(loader.Module):
+	"""Pixelizator"""
 	strings = {
-		"name": "Soaping"
+		"name": "Pixelizator"
 	}
 
 	async def client_ready(self, client, db):
@@ -42,15 +42,15 @@ class SoaperMod(loader.Module):
 	
 	
 	@loader.sudo
-	async def soapcmd(self, message):
-		""".soap <reply to photo>"""
-		soap = 3
+	async def pixcmd(self, message):
+		""".pix <reply to photo>"""
+		pix = 3
 		a = utils.get_args(message)
 		if a:
 			if a[0].isdigit():
-				soap = int(a[0])
-				if soap <= 0:
-					soap = 3
+				pix = int(a[0])
+				if pix <= 0:
+					pix = 3
 		
 		if message.is_reply:
 			reply_message = await message.get_reply_message()
@@ -62,7 +62,7 @@ class SoaperMod(loader.Module):
 			await utils.answer(message, "<code>Reply to pic or stick!</code>")
 			return
 		
-		await message.edit("Soaping...")
+		await message.edit("Pixelizing...")
 		file = await self.client.download_media(data, bytes)
 		media = await Soaping(file, soap)
 		await message.delete()
