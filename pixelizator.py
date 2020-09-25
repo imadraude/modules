@@ -64,7 +64,7 @@ class PixelizatorMod(loader.Module):
 		
 		await message.edit("Pixelizing...")
 		file = await self.client.download_media(data, bytes)
-		media = await Soaping(file, soap)
+		media = await Soaping(file, pix)
 		await message.delete()
 		
 		await message.client.send_file(message.to_id, media)
