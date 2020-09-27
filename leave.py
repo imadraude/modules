@@ -17,7 +17,7 @@ class LeaveMod(loader.Module):
 			await message.delete()
 		else:
 			await message.edit(f"<code>{text}</code>")
-			await sleep(0.2)
+			await sleep(1)
 			await message.client(LeaveChannelRequest(message.chat_id))
 		
 		
