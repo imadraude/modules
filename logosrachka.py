@@ -1,8 +1,3 @@
-#Created by Clown? huh, just a noob coder.
-#MomSlayer
-#AlwaysInBan
-
-
 import asyncio
 from asyncio import wait, sleep
 
@@ -34,11 +29,11 @@ async def tmemes(e):
     text = str(e.pattern_match.group(1))
     change = str.maketrans(RuKeys + EnKeys, EnKeys + RuKeys)
     texts = str.translate(text, change)
-    for _ in range(10):
+    for _ in range(20):
         await e.edit(texts)
-        await sleep(0.5)
+        await sleep(0.2)
         await e.edit(text)
-        await sleep(0.5)
+        await sleep(0.2)
     if BOTLOG:
         await e.client.send_message(
             BOTLOG_CHATID, "#WLOG\n"
