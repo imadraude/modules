@@ -10,4 +10,5 @@ class FakeTypeMod(loader.Module):
         if not args.isdigit():
             return await message.edit("инт?")
         async with message.client.action(message.to_id, 'typing'):
+            await message.delete()
             await sleep(int(args))
