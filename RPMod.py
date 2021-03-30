@@ -21,7 +21,7 @@ class RPMod(loader.Module):
 
     async def rplistcmd(self, message):
         """Используй: .rplist чтобы посмотреть список рп команд."""
-        await message.edit("<b>• чмок\n• чпок\n• кусь\n• обнять\n• поцеловать\n• шлеп\n• убить\n• выебать\n• связать\n• ударить\n• уебать\n• отсосать\n• отлизать\n• задушить\n• украсть"
+        await message.edit("<b>• чмок\n• чпок\n• кусь\n• обнять\n• поцеловать\n• шлеп\n• убить\n• выебать\n• связать\n• ударить\n• уебать\n• отсосать\n• отлизать\n• отпиздить\n• задушить\n• украсть"
                            "\n• погладить\n• притянуть\n• изнасиловать\n• отпороть</b>")
 
     async def watcher(self, message):
@@ -63,6 +63,8 @@ class RPMod(loader.Module):
                     await message.edit(f"<a href=tg://user?id={me.id}>{me.first_name}</a> погладил <a href=tg://user?id={user.id}>{user.first_name}</a>")
                 if message.text.lower() == "притянуть":
                     await message.edit(f"<a href=tg://user?id={me.id}>{me.first_name}</a> притянул <a href=tg://user?id={user.id}>{user.first_name}</a>")
+                if message.text.lower() == "отпиздить":
+                    await message.edit(f"<a href=tg://user?id={me.id}>{me.first_name}</a> отпиздил <a href=tg://user?id={user.id}>{user.first_name}</a>")
                 if message.text.lower() == "изнасиловать":
                     await message.edit(f"<a href=tg://user?id={me.id}>{me.first_name}</a> изнасиловал <a href=tg://user?id={user.id}>{user.first_name}</a>")
                 if message.text.lower() == "отпороть":
