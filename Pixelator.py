@@ -1,5 +1,3 @@
-# Maded by clown.
-# not licensed but i will fuck ur mom if ur going to use this code.
 from .. import loader, utils
 from PIL import Image
 import io

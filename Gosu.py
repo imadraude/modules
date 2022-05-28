@@ -1,5 +1,3 @@
-# clown... again :/
-
 from asyncio import sleep
 import random
 from telethon import functions

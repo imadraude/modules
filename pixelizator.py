@@ -1,4 +1,4 @@
-from .. import loader, utils  # pylint: disable=relative-beyond-top-level
+from .. import loader, utils
 import io
 from PIL import Image, ImageOps
 from telethon.tl.types import DocumentAttributeFilename

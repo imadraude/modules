@@ -1,5 +1,3 @@
-# Russian tts for Friendly-telegram: .rustts
-
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from .. import loader, utils

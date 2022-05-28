@@ -1,5 +1,3 @@
-# Created by clown :/
-# pm - @guslslakkaakdkab
 import telethon
 from .. import loader, utils
 import os
