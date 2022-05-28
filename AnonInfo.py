@@ -1,4 +1,4 @@
-__version__ = (0, 0, 49)
+__version__ = (0, 0, 54)
 
 
 # ▄▀█ █▄░█ █▀█ █▄░█ █▀▄ ▄▀█ █▀▄▀█ █░█ █▀
@@ -24,7 +24,6 @@ from telethon.tl.types import Message
 from telethon.utils import get_display_name
 
 from .. import loader, main, utils
-from ..inline.types import InlineQuery
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +40,7 @@ class anoninfoMod(loader.Module):
         "prefix": "Prefix",
         "up-to-date": "😌 Up-to-date",
         "update_required": "😕 Update required </b><code>.update</code><b>",
-        "_cfg_cst_msg": "Custom message for info. May contain {me}, {version}, {build}, {prefix}, {platform} keywords",
+        "_cfg_cst_msg": "Custom message for info. May contain {me}, {version}, {build}, {prefix}, {platform}, {upd} keywords",
         "_cfg_cst_btn": "Custom button for info. Leave empty to remove button",
         "_cfg_cst_bnr": "Custom Banner for info.",
         "_cfg_cst_frmt": "Custom fileformat for Banner info.",
@@ -54,24 +53,6 @@ class anoninfoMod(loader.Module):
                 "custom_message",
                 "no",
                 doc=lambda: self.strings("_cfg_cst_msg"),
-            ),
-            loader.ConfigValue(
-                "custom_button1",
-                ["🔥 Apodiktum Hikka Modules 🔥", "https://t.me/apodiktum_modules"],
-                lambda: self.strings("_cfg_cst_btn"),
-                validator=loader.validators.Series(min_len=0, max_len=2),
-            ),
-            loader.ConfigValue(
-                "custom_button2",
-                ["🌘 Hikka RU Support chat", "https://t.me/hikka_talks"],
-                lambda: self.strings("_cfg_cst_btn"),
-                validator=loader.validators.Series(min_len=0, max_len=2),
-            ),
-            loader.ConfigValue(
-                "custom_button3",
-                ["🌘 Hikka EN Support chat", "https://t.me/hikka_en"],
-                lambda: self.strings("_cfg_cst_btn"),
-                validator=loader.validators.Series(min_len=0, max_len=2),
             ),
             loader.ConfigValue(
                 "custom_banner",
@@ -89,6 +70,78 @@ class anoninfoMod(loader.Module):
                 "photo",
                 lambda: self.strings("_cfg_cst_frmt"),
                 validator=loader.validators.Choice(["photo", "video", "audio", "gif"]),
+            ),
+            loader.ConfigValue(
+                "custom_button1",
+                ["🔥 Apodiktum Hikka Modules 🔥", "https://t.me/apodiktum_modules"],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button2",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button3",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button4",
+                ["🌘 Hikka EN Support chat", "https://t.me/hikka_en"],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button5",
+                ["🌘 Hikka. userbot", "https://t.me/hikka_ub"],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button6",
+                ["🌘 Hikka RU Support chat", "https://t.me/hikka_talks"],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button7",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button8",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button9",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button10",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button11",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
+            ),
+            loader.ConfigValue(
+                "custom_button12",
+                [],
+                lambda: self.strings("_cfg_cst_btn"),
+                validator=loader.validators.Series(min_len=0, max_len=2),
             ),
         )
 
@@ -116,16 +169,18 @@ class anoninfoMod(loader.Module):
         platform = utils.get_named_platform()
 
         return (
-            self.config["custom_message"].format(
+            "🌚"
+            + self.config["custom_message"].format(
                 me=me,
                 version=version,
                 build=build,
                 prefix=prefix,
                 platform=platform,
+                upd=upd,
             )
             if self.config["custom_message"] != "no"
             else (
-                "<b>😈 Anondamus Hikka Info</b>\n"
+                "<b>🌚 Anondamus Hikka Info</b>\n"
                 f'<b>🤴 {self.strings("owner")}: </b>{me}\n\n'
                 f"<b>🔮 {self.strings('version')}: </b>{version} {build}\n"
                 f"<b>{upd}</b>\n\n"
@@ -134,53 +189,44 @@ class anoninfoMod(loader.Module):
             )
         )
 
-    def _get_mark(self, int):
-        if int == 1:
-            return (
-                {
-                    "text": self.config["custom_button1"][0],
-                    "url": self.config["custom_button1"][1],
-                }
-                if self.config["custom_button1"]
-                else None
-            )
-
-        elif int == 2:
-            return (
-                {
-                    "text": self.config["custom_button2"][0],
-                    "url": self.config["custom_button2"][1],
-                }
-                if self.config["custom_button2"]
-                else None
-            )
-
-        elif int == 3:
-            return (
-                {
-                    "text": self.config["custom_button3"][0],
-                    "url": self.config["custom_button3"][1],
-                }
-                if self.config["custom_button3"]
-                else None
-            )
+    def _get_mark(self, btn_count):
+        btn_count = str(btn_count)
+        return (
+            {
+                "text": self.config[f"custom_button{btn_count}"][0],
+                "url": self.config[f"custom_button{btn_count}"][1],
+            }
+            if self.config[f"custom_button{btn_count}"]
+            else None
+        )
 
     @loader.unrestricted
     async def anoninfocmd(self, message: Message):
         """Send userbot info"""
-        m1 = self._get_mark(1)
-        m2 = self._get_mark(2)
-        m3 = self._get_mark(3)
+        m = {x: self._get_mark(x) for x in range(13)}
         await self.inline.form(
             message=message,
             text=self._render_info(),
             reply_markup=[
                 [
-                    *([m1] if m1 else []),
+                    *([m[1]] if m[1] else []),
+                    *([m[2]] if m[2] else []),
+                    *([m[3]] if m[3] else []),
                 ],
                 [
-                    *([m2] if m2 else []),
-                    *([m3] if m3 else []),
+                    *([m[4]] if m[4] else []),
+                    *([m[5]] if m[5] else []),
+                    *([m[6]] if m[6] else []),
+                ],
+                [
+                    *([m[7]] if m[7] else []),
+                    *([m[8]] if m[8] else []),
+                    *([m[9]] if m[9] else []),
+                ],
+                [
+                    *([m[10]] if m[10] else []),
+                    *([m[11]] if m[11] else []),
+                    *([m[12]] if m[12] else []),
                 ],
             ],
             **{}
