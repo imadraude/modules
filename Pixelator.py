@@ -1,13 +1,17 @@
-#Maded by clown.
-#not licensed but i will fuck ur mom if ur going to use this code.
+# Maded by clown.
+# not licensed but i will fuck ur mom if ur going to use this code.
 from .. import loader, utils
 from PIL import Image
 import io
 
+
 def register(cb):
     cb(PixelatorMod())
+
+
 class PixelatorMod(loader.Module):
-    strings = {'name': 'Pixelator'}
+    strings = {"name": "Pixelator"}
+
     async def pixitcmd(self, event):
         """пикселятор. делает из арта пиксель арт. можно в качестве аргумента указать размеры пикселя. если аргумента нет то размер будет равен 16."""
         reply = await event.get_reply_message()
@@ -24,11 +28,12 @@ class PixelatorMod(loader.Module):
             return
         pic = await check_media(event, reply)
         if not pic:
-            await event.edit('<b>это не изображение, лол.</b>')
+            await event.edit("<b>это не изображение, лол.</b>")
             return
         haha = pixelate(pic, pixel)
         await event.client.send_file(event.to_id, haha)
         await event.delete()
+
 
 async def check_media(message, reply):
     if reply and reply.media:
@@ -52,15 +57,14 @@ async def check_media(message, reply):
         except:
             return None
 
+
 def pixelate(img, pixel_size):
     image = Image.open(io.BytesIO(img))
     image = image.resize(
-        (image.size[0] // pixel_size, image.size[1] // pixel_size),
-        Image.NEAREST
+        (image.size[0] // pixel_size, image.size[1] // pixel_size), Image.NEAREST
     )
     image = image.resize(
-        (image.size[0] * pixel_size, image.size[1] * pixel_size),
-        Image.NEAREST
+        (image.size[0] * pixel_size, image.size[1] * pixel_size), Image.NEAREST
     )
     out = io.BytesIO()
     out.name = "pixed.png"

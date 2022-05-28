@@ -1,5 +1,5 @@
-#Created by clown :/
-#pm - @guslslakkaakdkab
+# Created by clown :/
+# pm - @guslslakkaakdkab
 import telethon
 from .. import loader, utils
 import os
@@ -13,15 +13,18 @@ from io import BytesIO
 from textwrap import wrap
 import random
 
+
 def register(cb):
     cb(SkolkoMod())
 
+
 class SkolkoMod(loader.Module):
     """Согласен"""
-    strings = {'name': 'Сколько раз блять тебе обьяснять'}
+
+    strings = {"name": "Сколько раз блять тебе обьяснять"}
 
     def __init__(self):
-        self.name = self.strings['name']
+        self.name = self.strings["name"]
         self._me = None
         self._ratelimit = []
 
@@ -38,11 +41,12 @@ class SkolkoMod(loader.Module):
         else:
             pic = await check_media(message, reply)
             if not pic:
-                await utils.answer(message, 'нет изображения.')
+                await utils.answer(message, "нет изображения.")
                 return
             what = haha(pic)
             await message.delete()
             await message.client.send_file(message.to_id, what)
+
 
 def lol(background, image, cords, size):
     overlay = Image.open(BytesIO(image))
@@ -51,7 +55,9 @@ def lol(background, image, cords, size):
 
 
 def haha(image):
-    pics = requests.get("https://github.com/SpyderJabro/SpYD3R/blob/master/photo.jpg?raw=true")
+    pics = requests.get(
+        "https://github.com/SpyderJabro/SpYD3R/blob/master/photo.jpg?raw=true"
+    )
     pics.raw.decode_content = True
     img = Image.open(io.BytesIO(pics.content)).convert("RGBA")
     lol(img, image, (20, 240), 150)
@@ -60,6 +66,7 @@ def haha(image):
     out.name = "outsider.png"
     img.save(out)
     return out.getvalue()
+
 
 async def check_media(message, reply):
     if reply and reply.media:
@@ -82,6 +89,3 @@ async def check_media(message, reply):
             return data
         except:
             return None
-
-
-

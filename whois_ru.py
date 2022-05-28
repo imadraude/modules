@@ -8,9 +8,11 @@ from telethon.tl.types import MessageEntityMentionName
 def register(cb):
     cb(WhoIsMod())
 
+
 class WhoIsMod(loader.Module):
     """Получает информацию о пользователе в Телеграме (включая вас!)."""
-    strings = {'name': 'WhoIs'}
+
+    strings = {"name": "WhoIs"}
 
     async def whoiscmd(self, whos):
         await whos.edit("<code>Получаю информацию из датацентра Telegram...</code>")
@@ -29,13 +31,15 @@ class WhoIsMod(loader.Module):
             message_id_to_reply = None
 
         try:
-            await whos.client.send_file(whos.chat_id,
-                                        photo,
-                                        caption=caption,
-                                        link_preview=False,
-                                        force_document=False,
-                                        reply_to=message_id_to_reply,
-                                        parse_mode="html")
+            await whos.client.send_file(
+                whos.chat_id,
+                photo,
+                caption=caption,
+                link_preview=False,
+                force_document=False,
+                reply_to=message_id_to_reply,
+                parse_mode="html",
+            )
 
             if not photo.startswith("http"):
                 os.remove(photo)
@@ -49,8 +53,7 @@ async def get_user(event):
     """Получение информации о пользователе с реплая или аргумента."""
     if event.reply_to_msg_id and not utils.get_args_raw(event):
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(
-            GetFullUserRequest(previous_message.from_id))
+        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
     else:
         user = utils.get_args_raw(event)
 
@@ -64,21 +67,18 @@ async def get_user(event):
         if event.entities is not None:
             probable_user_mention_entity = event.entities[0]
 
-            if isinstance(probable_user_mention_entity,
-                          MessageEntityMentionName):
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
                 user_id = probable_user_mention_entity.user_id
                 replied_user = await event.client(GetFullUserRequest(user_id))
                 return replied_user
         try:
             user_object = await event.client.get_entity(user)
-            replied_user = await event.client(
-                GetFullUserRequest(user_object.id))
+            replied_user = await event.client(GetFullUserRequest(user_object.id))
         except:
             self_user = await event.client.get_me()
             user = self_user.id
             user_object = await event.client.get_entity(user)
-            replied_user = await event.client(
-                GetFullUserRequest(user_object.id))
+            replied_user = await event.client(GetFullUserRequest(user_object.id))
             return replied_user
     return replied_user
 
@@ -86,11 +86,13 @@ async def get_user(event):
 async def fetch_info(replied_user, event):
     """Подробная информация о пользователе."""
     replied_user_profile_photos = await event.client(
-        GetUserPhotosRequest(user_id=replied_user.user.id,
-                             offset=42,
-                             max_id=0,
-                             limit=80))
-    replied_user_profile_photos_count = "Пользователю нужна помощь с загрузкой аватарки."
+        GetUserPhotosRequest(
+            user_id=replied_user.user.id, offset=42, max_id=0, limit=80
+        )
+    )
+    replied_user_profile_photos_count = (
+        "Пользователю нужна помощь с загрузкой аватарки."
+    )
     try:
         replied_user_profile_photos_count = replied_user_profile_photos.count
     except AttributeError as e:
@@ -116,15 +118,22 @@ async def fetch_info(replied_user, event):
         verified = "Нет"
     else:
         verified = "Да"
-    photo = await event.client.download_profile_photo(user_id,
-                                                      str(user_id) + ".jpg",
-                                                      download_big=True)
-    first_name = first_name.replace(
-        "\u2060", "") if first_name else ("Пользователь не указал имя.")
-    last_name = last_name.replace(
-        "\u2060", "") if last_name else ("Пользователь не указал фамилии.")
-    username = "@{}".format(username) if username else (
-        "У пользователя нету юзернейма.")
+    photo = await event.client.download_profile_photo(
+        user_id, str(user_id) + ".jpg", download_big=True
+    )
+    first_name = (
+        first_name.replace("\u2060", "")
+        if first_name
+        else ("Пользователь не указал имя.")
+    )
+    last_name = (
+        last_name.replace("\u2060", "")
+        if last_name
+        else ("Пользователь не указал фамилии.")
+    )
+    username = (
+        "@{}".format(username) if username else ("У пользователя нету юзернейма.")
+    )
     user_bio = "У пользователя нету информации о себе." if not user_bio else user_bio
 
     caption = "<b>ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ:</b>\n\n"
@@ -139,6 +148,6 @@ async def fetch_info(replied_user, event):
     caption += f"Кол-во аватарок в профиле: {replied_user_profile_photos_count}\n"
     caption += f"Общие чаты: {common_chat}\n"
     caption += f"Пермалинк: "
-    caption += f"<a href=\"tg://user?id={user_id}\">тык</a>"
+    caption += f'<a href="tg://user?id={user_id}">тык</a>'
 
     return photo, caption

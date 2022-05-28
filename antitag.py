@@ -7,14 +7,18 @@ from telethon import types
 
 logger = logging.getLogger(__name__)
 
+
 @loader.tds
 class retMod(loader.Module):
     """Посылает сообщение при вашем теге"""
-    strings = {"name": "RFD",
-               "gone": "Режим анти-тэга включен",
-               "back": "Режим анти-тэга выключен",
-               "ret": "<b>НЕ тэгай меня.</b>",
-               "ret_reason": "{}"}
+
+    strings = {
+        "name": "RFD",
+        "gone": "Режим анти-тэга включен",
+        "back": "Режим анти-тэга выключен",
+        "ret": "<b>НЕ тэгай меня.</b>",
+        "ret_reason": "{}",
+    }
 
     async def client_ready(self, client, db):
         self._db = db
@@ -45,7 +49,6 @@ class retMod(loader.Module):
                 ret_state = self.get_ret()
                 ret = self.strings("ret_reason", message).format(ret_state)
                 await message.reply(ret)
-
 
     def get_ret(self):
         return self._db.get(__name__, "ret", False)

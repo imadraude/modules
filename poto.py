@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 
 class GetPPMod(loader.Module):
     """Description for module"""
+
     strings = {"name": "Profile Photos"}
 
     async def client_ready(self, client, db):
@@ -32,7 +33,9 @@ class GetPPMod(loader.Module):
                     if u is True:
                         photo = await self.client.download_profile_photo(user.sender)
                     else:
-                        photo = await self.client.download_profile_photo(message.input_chat)
+                        photo = await self.client.download_profile_photo(
+                            message.input_chat
+                        )
                     await self.client.send_file(message.chat_id, photo)
                 except:
                     await message.edit("<code>This user has no photos</code>")
@@ -44,8 +47,8 @@ class GetPPMod(loader.Module):
                     await message.edit("<code>ID number you entered is invalid</code>")
                     return
             except:
-                 await message.edit("<code>ID number you entered is invalid</code>")
-                 return
+                await message.edit("<code>ID number you entered is invalid</code>")
+                return
             if int(id) <= (len(photos)):
                 send_photos = await self.client.download_media(photos[id - 1])
                 await self.client.send_file(message.chat_id, send_photos)

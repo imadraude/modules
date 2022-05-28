@@ -8,7 +8,6 @@ from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP
 from userbot.events import register
 
 
-
 @register(outgoing=True, pattern="^.wedit (.*)")
 async def tmeme(e):
     wedit = str(e.pattern_match.group(1))
@@ -18,9 +17,8 @@ async def tmeme(e):
             await e.edit(mess)
             await sleep(0.5)
     if BOTLOG:
-        await e.client.send_message(
-            BOTLOG_CHATID, "#WEDIT\n"
-            "Hm")
+        await e.client.send_message(BOTLOG_CHATID, "#WEDIT\n" "Hm")
+
 
 @register(outgoing=True, pattern="^.wlog (.*)")
 async def tmemes(e):
@@ -35,9 +33,8 @@ async def tmemes(e):
         await e.edit(text)
         await sleep(0.2)
     if BOTLOG:
-        await e.client.send_message(
-            BOTLOG_CHATID, "#WLOG\n"
-            "Hm")
+        await e.client.send_message(BOTLOG_CHATID, "#WLOG\n" "Hm")
+
 
 @register(outgoing=True, pattern="^.cedit (.*)")
 async def tmeme(e):
@@ -49,5 +46,5 @@ async def tmeme(e):
             await sleep(0.1)
     if BOTLOG:
         await e.client.send_message(
-            BOTLOG_CHATID, "#CEDIT\n"
-            "TSpam was executed successfully")
+            BOTLOG_CHATID, "#CEDIT\n" "TSpam was executed successfully"
+        )

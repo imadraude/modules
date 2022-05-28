@@ -1,4 +1,4 @@
-#clown... again :/
+# clown... again :/
 
 from asyncio import sleep
 import random
@@ -8,15 +8,18 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon import events
 from .. import loader, utils
 
+
 def register(cb):
     cb(GosuMod())
 
+
 class GosuMod(loader.Module):
     """ты еблан да?"""
-    strings = {'name': 'Госу ебаний'}
+
+    strings = {"name": "Госу ебаний"}
 
     def __init__(self):
-        self.name = self.strings['name']
+        self.name = self.strings["name"]
         self._me = None
         self._ratelimit = []
 
@@ -25,13 +28,15 @@ class GosuMod(loader.Module):
         self._client = client
 
     async def gosucmd(self, event):
-        chat = '@DotaGosuBot'
+        chat = "@DotaGosuBot"
         async with event.client.conversation(chat) as conv:
             try:
-                response = conv.wait_event(events.NewMessage(incoming=True, from_users=568032900))
-                await event.client.send_message(chat, 'Im a clown')
+                response = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=568032900)
+                )
+                await event.client.send_message(chat, "Im a clown")
                 response = await response
             except YouBlockedUserError:
-                await event.edit('<code>Разблокируй @DotaGosuBot</code>')
+                await event.edit("<code>Разблокируй @DotaGosuBot</code>")
                 return
             await event.edit(response.text)

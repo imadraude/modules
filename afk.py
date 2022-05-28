@@ -12,11 +12,14 @@ logger = logging.getLogger(__name__)
 @loader.tds
 class AFKMod(loader.Module):
     """Provides a message saying that you are unavailable"""
-    strings = {"name": "AFK",
-               "gone": "<b>Я теперь в AFK.</b>",
-               "back": "<b>Я больше не в AFK.</b>",
-               "afk": "<b>Я сейчас в AFK (уже {}).</b>",
-               "afk_reason": "<b>Я сейчас в AFK (уже {}).\nПричина:</b> <i>{}</i>"}
+
+    strings = {
+        "name": "AFK",
+        "gone": "<b>Я теперь в AFK.</b>",
+        "back": "<b>Я больше не в AFK.</b>",
+        "afk": "<b>Я сейчас в AFK (уже {}).</b>",
+        "afk_reason": "<b>Я сейчас в AFK (уже {}).\nПричина:</b> <i>{}</i>",
+    }
 
     async def client_ready(self, client, db):
         self._db = db
@@ -53,7 +56,9 @@ class AFKMod(loader.Module):
             if utils.get_chat_id(message) in ratelimit:
                 return
             else:
-                self._db.setdefault(__name__, {}).setdefault("ratelimit", []).append(utils.get_chat_id(message))
+                self._db.setdefault(__name__, {}).setdefault("ratelimit", []).append(
+                    utils.get_chat_id(message)
+                )
                 self._db.save()
             user = await utils.get_user(message)
             if user.is_self or user.bot or user.verified:
@@ -62,7 +67,9 @@ class AFKMod(loader.Module):
             if self.get_afk() is False:
                 return
             now = datetime.datetime.now().replace(microsecond=0)
-            gone = datetime.datetime.fromtimestamp(self._db.get(__name__, "gone")).replace(microsecond=0)
+            gone = datetime.datetime.fromtimestamp(
+                self._db.get(__name__, "gone")
+            ).replace(microsecond=0)
             diff = now - gone
             if afk_state is True:
                 ret = self.strings("afk", message).format(diff)
